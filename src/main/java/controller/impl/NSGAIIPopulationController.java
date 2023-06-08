@@ -15,6 +15,7 @@ public class NSGAIIPopulationController extends AbstractPopulationController {
     private final NSGAII nsgaii = DataPool.nsgaii;
     public boolean isChanged = false;
 
+    public NSGAIIPopulationController(){};
     @Override
     public void doInitial() {
 //        Chromosome heft=HEFT.generateChromosome();

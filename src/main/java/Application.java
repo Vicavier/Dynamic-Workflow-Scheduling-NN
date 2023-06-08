@@ -28,6 +28,7 @@ public class Application {
         List<List<Chromosome>> list=controller.iterate();
         Output output = new ConsoleOutputImpl();
         output.output(list);
+        List<Chromosome> front = list.get(0);
         DataUtils.operateHV(DataPool.all);
 //        List<List<Chromosome>> list = controller.rankReturnIterate(400,500);
 //        DynamicSimulation sim = new GaussianDynamicSimulation();

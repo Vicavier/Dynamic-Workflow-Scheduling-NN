@@ -1,11 +1,10 @@
 package entity;
 
-
 import service.algorithm.impl.NSGAII;
 
 import java.util.*;
 
-public class DataPool {
+public class DoubleStringDataPool {
     public static Task[] tasks=new Task[0];
     public static TaskGraph graph;
     public static List<int[]> edges;
@@ -13,13 +12,13 @@ public class DataPool {
     public static int insNum=0;
     public static int typeNum=0;
     public static Type[] types;
-    public static double []weightVector;
+    public static double weightVector[];
     public static Random random;
     public static List<Integer> insToType=new ArrayList<>(250);
     public static List<Integer> accessibleIns=new ArrayList<>();
     public static HashSet<Integer> disabledIns=new HashSet<>();
 
-    public static List<List<Chromosome>> all = new LinkedList<>();
+    public static List<List<Individual>> allIndividual = new LinkedList<>();
     public static void clear(){
         tasks = new Task[0];
         graph = graph.clone();
@@ -32,7 +31,6 @@ public class DataPool {
         insToType.clear();
         accessibleIns.clear();
         disabledIns.clear();
-        all.clear();
+        allIndividual.clear();
     }
-
 }

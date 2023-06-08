@@ -1,12 +1,15 @@
 package service.multi;
 
 import controller.impl.NSGAIIPopulationController;
+import entity.Chromosome;
 import entity.DataPool;
 import service.crash.SimilarityFixedCrash;
 import utils.ConfigUtils;
 import utils.CrashUtils;
 import utils.InitUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MultiPopulationFixed {
@@ -29,8 +32,26 @@ public class MultiPopulationFixed {
         for(int k=0;k<generation;++k){
             if(CrashUtils.generations.contains(k)){
                 controller.isChanged = true;
+                controller.setSize(Integer.parseInt(ConfigUtils.get("evolution.population.size2")));
                 DA = new NSGAIIPopulationController();
+                DA.setSize(Integer.parseInt(ConfigUtils.get("evolution.population.size2")));
                 DA.doInitial();
+                if (controller.getFa().size() == Integer.parseInt(ConfigUtils.get("evolution.population.size"))){
+                    List<Chromosome> newFa = new ArrayList<>();
+                    int [] chosen = new int[Integer.parseInt(ConfigUtils.get("evolution.population.size"))];
+                    while(newFa.size()<Integer.parseInt(ConfigUtils.get("evolution.population.size2"))) {
+                        try {
+                            int temp = DataPool.random.nextInt(Integer.parseInt(ConfigUtils.get("evolution.population.size")));
+                            if (chosen[temp] == 0){
+                                chosen[temp] = 1;
+                                newFa.add(controller.getFa().get(temp).clone());
+                            }
+                        } catch (CloneNotSupportedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    controller.setFa(newFa);
+                }
             }
             controller.iterateACycle(k,DataPool.all);
             if(DA!=null) DA.iterateACycle(0,null);
