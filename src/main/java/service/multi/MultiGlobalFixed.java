@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MultiGlobalFixed {
     public static void main(String[] args) {
-        for (int i = 0; i < 15; ++i) {
+        for (int i = 0; i < 20; ++i) {
             InitUtils.init();
             System.out.println("--------------------repeat times:" + " " + i + "--------------------");
             System.out.println("----------cold start running----------");

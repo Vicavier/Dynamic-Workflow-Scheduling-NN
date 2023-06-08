@@ -163,19 +163,20 @@ public class CrashUtils {
             String javaRecv = "ok";
             out.write(javaRecv.getBytes());
             out.flush();
-            int size = list.size();
 //            System.out.println("list length:"+size);
 //            System.out.println("g3 length"+g3.size());
             //--------------------------原论文思路----------------------------
-            for (Chromosome c:g3){
-                list.add(c.clone());
+            while (g3.size()>list.size()){
+                g3.remove(DataPool.random.nextInt(g3.size()));
             }
-            while(list.size()>size){
-                list.remove(DataPool.random.nextInt(list.size()));
-            }
-            //--------------------------------------------------------------
 
-            //--------------------------多种群-------------------------------
+            while (g3.size()<list.size()){
+                g3.add(list.get(DataPool.random.nextInt(list.size())).clone());
+            }
+            //The new solutions are replaced with the randomly chosen solutions from the parent population
+            for (int i = 0; i < g3.size()/3; i++) {
+                g3.set(i, list.get(DataPool.random.nextInt(list.size())).clone());
+            }
             for (int x = 0; x < list.size(); ++x) {
                 Chromosome chromosome = list.get(x);
                 for (int i = 0; i < chromosome.getTask2ins().length; ++i) {
@@ -186,6 +187,10 @@ public class CrashUtils {
                 }
                 DataUtils.refresh(list.get(x));
             }
+            //--------------------------------------------------------------
+
+            //--------------------------多种群-------------------------------
+
 //
 //            List<List<Chromosome>> rank;
 //            List<Chromosome> hugeList = new ArrayList<>();
@@ -270,9 +275,6 @@ public class CrashUtils {
             int No_ins = Integer.parseInt(recvData[i]);
             if (No_ins < 0) No_ins = 0;
             if (No_ins > 79) No_ins = 79;
-
-            while (DataPool.disabledIns.contains(No_ins))
-                No_ins = ((int)(No_ins / 10)) * 10 + DataPool.random.nextInt(10);
             task2ins[i] = No_ins;
         }
         return task2ins;

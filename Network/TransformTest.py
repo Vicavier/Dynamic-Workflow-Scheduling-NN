@@ -114,8 +114,8 @@ while True:
         numpy_array = y.numpy()
         numpy_array2 = y_pred.numpy()
         # 保存为.npy文件
-        np.save('y_train.npy', numpy_array)
-        np.save('y_pred.npy', numpy_array2)
+        # np.save('y_train.npy', numpy_array)
+        # np.save('y_pred.npy', numpy_array2)
 
         # 发送数据到Java服务端
         send_data = ''
